@@ -40,10 +40,12 @@ var items = [];
 //
 function addManyHobbies(){
 	var add_btn = document.getElementById('confirm');
+	var textarea = document.getElementById('textarea');
+	textarea.value = 'a,b,c,a,c,cc,a,b';
 	add_btn.onclick = function(){
-		var textarea = document.getElementById('textarea');
 		extractItems(textarea.value.trim());
 		textarea.value = '';
+		stripRepeat();
 		renderQueue('hobbyList',items);
 	};
 }
@@ -91,6 +93,31 @@ function extractItems(content){
 	}
 }
 
+// delete the repeated items in the items[]
+function stripRepeat(){
+	var myLength = items.length;
+	for (var i = 0; i < myLength; i++) {
+		for (var j = i+1; j < myLength; j++) {
+
+			if (items[i]==items[j]) {
+
+				// delete the repeated one and get the items[] alright
+				delete items[j];
+				var tempArray = [];
+				for (var p = 0,q = 0; p < items.length; p++) {
+					if (items[p]==null) {
+						// q--;
+					}else{
+						tempArray[q] = items[p];
+						q++;
+					}
+				};
+				items = tempArray;
+				myLength--;
+			};
+		};
+	};
+}
 
 // --------------------------------------------------------------//
 
