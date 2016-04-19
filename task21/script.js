@@ -154,12 +154,14 @@ function ElementClick_ToDelete(itsID,source){
 			deleteElement(event.target,itsID,source);
 		}
 		eles[i].onmouseenter = function(event){
-			event.target.innerHTML = "<span>click to delete</span> "+event.target.innerHTML;
+			event.target.innerHTML = "delete "+event.target.innerHTML;
 			event.target.style.cursor = 'pointer';
+			event.target.style.backgroundColor = 'tomato';
 			// event.stopPropagation();
 		}
 		eles[i].onmouseleave = function(event){
-			event.target.innerHTML = event.target.innerHTML.replace('<span>click to delete</span> ', '');
+			event.target.innerHTML = event.target.innerHTML.replace('delete ', '');
+			event.target.style.backgroundColor = '#333';
 		}
 	};
 }
