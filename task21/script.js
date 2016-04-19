@@ -9,18 +9,18 @@ function addHobby(){
 
 	hobby.onkeyup = function(){
 		var hobbyContent = hobby.value;
-		if (hobbyContent) {
+		if (hobbyContent.length>1) {
 			var lastChar = hobbyContent.substring(hobbyContent.length-1);
 			if (lastChar==' '||lastChar==','||lastChar=='，'||lastChar=='、') {
 				if (queueElements.length==10) {
-					deleteElementByIndex(queueElements,0);
+					deleteElementByIndex('queue',queueElements,0);
 				};
 				queueElements.push(hobbyContent.substring(0, hobbyContent.length-1));
 				hobby.value = '';
 				renderQueue('queue',queueElements);
 			}else if (event.keyCode==13) {
 				if (queueElements.length==10) {
-					deleteElementByIndex(queueElements,0);
+					deleteElementByIndex('queue',queueElements,0);
 				};
 				queueElements.push(hobbyContent);
 				hobby.value = '';
