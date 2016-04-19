@@ -1,0 +1,44 @@
+*{
+	padding: 0;
+	margin:0;
+}
+
+body{
+	padding: 20px;
+	font-family: Microsoft JhengHei;
+}
+
+input{
+	width: 300px;
+	height: 50px;
+	line-height: 50px;
+	font-size: 30px;
+	outline: none;
+	font-family: Microsoft JhengHei;
+}
+
+.buttonGroup button{
+	margin-top: 20px;
+	width: 100px;
+	height: 30px;
+	text-align: center;
+	font-family: Microsoft JhengHei;
+	font-weight: bold;
+}
+
+#queue{
+	margin-top: 20px;	
+	display: flex;
+	justify-content:flex-start;
+}
+
+#queue div{
+	border-radius: 60px;
+	width: 60px;
+	height: 60px;
+	text-align: center;
+	line-height: 60px;
+	color: white;
+	margin-right: 10px;
+}
+
