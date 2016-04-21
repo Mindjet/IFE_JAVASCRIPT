@@ -9,18 +9,18 @@ function addHobby(){
 
 	hobby.onkeyup = function(){
 		var hobbyContent = hobby.value;
-		if (hobbyContent) {
+		if (hobbyContent.length>1) {
 			var lastChar = hobbyContent.substring(hobbyContent.length-1);
 			if (lastChar==' '||lastChar==','||lastChar=='，'||lastChar=='、') {
 				if (queueElements.length==10) {
-					deleteElementByIndex(queueElements,0);
+					deleteElementByIndex('queue',queueElements,0);
 				};
 				queueElements.push(hobbyContent.substring(0, hobbyContent.length-1));
 				hobby.value = '';
 				renderQueue('queue',queueElements);
 			}else if (event.keyCode==13) {
 				if (queueElements.length==10) {
-					deleteElementByIndex(queueElements,0);
+					deleteElementByIndex('queue',queueElements,0);
 				};
 				queueElements.push(hobbyContent);
 				hobby.value = '';
@@ -154,12 +154,14 @@ function ElementClick_ToDelete(itsID,source){
 			deleteElement(event.target,itsID,source);
 		}
 		eles[i].onmouseenter = function(event){
-			event.target.innerHTML = "<span>click to delete</span> "+event.target.innerHTML;
+			event.target.innerHTML = "delete "+event.target.innerHTML;
 			event.target.style.cursor = 'pointer';
+			event.target.style.backgroundColor = 'tomato';
 			// event.stopPropagation();
 		}
 		eles[i].onmouseleave = function(event){
-			event.target.innerHTML = event.target.innerHTML.replace('<span>click to delete</span> ', '');
+			event.target.innerHTML = event.target.innerHTML.replace('delete ', '');
+			event.target.style.backgroundColor = '#333';
 		}
 	};
 }

@@ -28,12 +28,6 @@ body{
 	color: white;
 }
 
-#queue div span{
-	font-size: 15px;
-	line-height: 20px;
-	color: red;
-}
-
 #textarea{
 	margin-top: 20px;
 	font: 16px Microsoft JhengHei;
