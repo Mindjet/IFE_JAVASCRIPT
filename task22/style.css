@@ -1,0 +1,42 @@
+*{
+	padding: 0;
+	margin:0;
+}
+
+body{
+
+}
+
+div{
+	outline: 2px solid #666;
+}
+
+.child-0{
+	display: flex;
+	justify-content:flex-start;
+	margin: 100px auto;
+	width: 800px;
+	height: 200px;
+	padding: 20px 0;
+}
+
+.child-1,.child-2{
+	display: flex;
+	justify-content:flex-start;
+	margin-left: 20px;
+	width: 370px;
+	padding: 20px 0;
+}
+
+.child-3,.child-4,.child-5,.child-6{
+	display: flex;
+	justify-content:flex-start;
+	width: 155px;
+	margin-left: 20px;
+	padding: 20px 0;
+}
+
+.child-7,.child-8,.child-9,.child-10,.child-11,.child-12,.child-13,.child-14{
+	width: 47px;
+	margin-left: 20px;
+}
