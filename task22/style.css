@@ -4,11 +4,11 @@
 }
 
 body{
-
+	text-align: center;
 }
 
 div{
-	outline: 2px solid #666;
+	outline: 2px solid #396;
 }
 
 .child-0{
@@ -39,4 +39,11 @@ div{
 .child-7,.child-8,.child-9,.child-10,.child-11,.child-12,.child-13,.child-14{
 	width: 47px;
 	margin-left: 20px;
+}
+
+button{
+	margin: 20px;
+	width: 180px;
+	height: 30px;
+	font: 16px Microsoft JhengHei;
 }

@@ -1,6 +1,5 @@
 
 
-var colorLib = ['tomato','orange','black','green'];
 var renderList = [];
 var timer = null;
 
@@ -20,13 +19,9 @@ function handleBtn(){
 		render();
 	}
 
-	// callback can change backcolor in both types of traversal
+	// callback can push nodes into the renderList
 	callback = function(node){
-		for (var i = 0; i < node.length; i++) {
-			console.log(node[i].className.substring(6));
-			// node[i].style.backgroundColor = colorLib[Math.ceil(Math.random()*4)-1];
-			renderList.push(node);
-		};
+		renderList.push(node);
 	}
 
 }
@@ -36,14 +31,9 @@ function traversalDF(callback){
 
 	(function recurse(nodeName){
 
-		var node = getByClass(nodeName,null);
-		// console.log(node);
-		for (var i = 0; i < node.length; i++) {
-			if (node[i].children.length!=0) {
-				for (var j = 0; j < node[i].children.length; j++) {
-					recurse(node[i].children[j].className);
-				};
-			};
+		var node = getByClass(nodeName,null)[0];
+		for (var i = 0; i < node.children.length; i++) {
+			recurse(node.children[i].className);
 		};
 		callback(node);
 
@@ -58,42 +48,41 @@ function traversalBF(callback){
 	queue.enqueue('child-0');
 
 	var currentNode = queue.dequeue();
+
 	while(currentNode){
-		var node = getByClass(currentNode);
-		for (var i = 0; i < node.length; i++) {
-			for (var j = 0; j < node[i].children.length; j++) {
-				queue.enqueue(node[i].children[j].className);
-			};
+		var node = getByClass(currentNode)[0];
+		for (var i = 0; i < node.children.length; i++) {
+			queue.enqueue(node.children[i].className);
 		};
 		callback(node);
 		currentNode = queue.dequeue();
-
 	}
 
 }
 
 function render(){
 	var tiktok = 0;
-	console.log(renderList[0]);
-	// renderList[tiktok].style.backgroundColor = 'blue';
-	// timer = setInterval(function(){
-	// 	tiktok++;
-	// 	if (tiktok<renderList.length) {
-	// 		renderList[tiktok-1].style.backgroundColor = 'white';
-	// 		renderList[tiktok].style.backgroundColor = 'blue';
-	// 	}else if (tiktok == renderList.length) {
-	// 		clearInterval(timer);
-	// 		renderList[tiktok-1].style.backgroundColor = 'white';
-	// 	};
+	renderList[tiktok].style.backgroundColor = 'tomato';
+	timer = setInterval(function(){
+		tiktok++;
+		if (tiktok<renderList.length) {
+			renderList[tiktok-1].style.backgroundColor = 'white';
+			renderList[tiktok].style.backgroundColor = 'tomato';
+		}else if (tiktok == renderList.length) {
+			clearInterval(timer);
+			renderList[tiktok-1].style.backgroundColor = 'white';
+		};
 
-	// },500);
+	},680);
 }
 
 function myReset(){
 	
 	clearInterval(timer);
-	for (var i = 0; i < renderList.length; i++) {
-		renderList[i].style.backgroundColor = 'white';
+	renderList = [];
+	var divList = document.getElementsByTagName('div');
+	for (var i = 0; i < divList.length; i++) {
+		divList[i].style.backgroundColor = 'white';
 	};
 
 }
@@ -134,6 +123,4 @@ function dequeue(){
 /*-----------------------------------------------------*/
 
 
-window.onload=function(){
-	handleBtn();
-}
+window.onload = handleBtn;
