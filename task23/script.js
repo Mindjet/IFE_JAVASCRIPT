@@ -20,10 +20,44 @@ function handleBtn(){
 	}
 
 	// callback can change backcolor in both types of traversal
-	callback = function(node){
-		renderList.push(node);
+	var callback = function(node){
+		if (node.tagName == 'DIV') {
+			renderList.push(node);
+		}
 	}
 
+}
+
+function handlerSearch(){
+
+	
+	var search_DF = document.getElementById('traversalDF_search');
+	var search_BF = document.getElementById('traversalBF_search');
+
+	search_DF.onclick = function(){
+
+		myReset();
+		traversalDF(callback);
+		render();
+	}
+
+	search_BF.onclick = function(){
+		myReset();
+		traversalBF(callback);
+		render();
+	}
+
+	var callback = function(node){
+		var content = document.getElementById('input').value.trim();
+		if (node.tagName == 'DIV') {
+			if (node.children[0].innerText == content) {
+				node.className = node.className + '-MARKED';
+				console.log(node.className);
+			};
+			renderList.push(node);
+		};
+		
+	}
 }
 
 // traversal of Breadth-first Search
@@ -32,13 +66,12 @@ function traversalDF(callback){
 	(function recurse(nodeName){
 
 		var node = getByClass(nodeName,null)[0];
-		// console.log(node);
 		if (node.children.length!=0) {
 			for (var j = 0; j < node.children.length; j++) {
-				recurse(node.children[j].className);
+				if (node.children[j].className)
+					recurse(node.children[j].className);
 			};
 		};
-		// console.log('222');
 		callback(node);
 
 	})('super');
@@ -55,7 +88,8 @@ function traversalBF(callback){
 	while(currentNode){
 		var node = getByClass(currentNode)[0];
 			for (var j = 0; j < node.children.length; j++) {
-				queue.enqueue(node.children[j].className);
+				if (node.children[j].className) 
+					queue.enqueue(node.children[j].className);
 			};
 		callback(node);
 		currentNode = queue.dequeue();
@@ -65,29 +99,55 @@ function traversalBF(callback){
 }
 
 function render(){
+
+	var exist = false;
 	var tiktok = 0;
+
 	renderList[tiktok].style.backgroundColor = 'blue';
+	if (renderList[tiktok].className.indexOf('-MARKED')>0) {
+		renderList[tiktok].style.backgroundColor = 'red';
+	};
+
 	timer = setInterval(function(){
+
 		tiktok++;
+
 		if (tiktok<renderList.length) {
+
 			renderList[tiktok-1].style.backgroundColor = 'white';
 			renderList[tiktok].style.backgroundColor = 'blue';
+
+			// if it's marked, change the backcolor to red
+			if(renderList[tiktok].className.indexOf('-MARKED')>0){
+				renderList[tiktok].style.backgroundColor = 'red';
+				exist = true;
+			};
+
 		}else if (tiktok == renderList.length) {
 			clearInterval(timer);
 			renderList[tiktok-1].style.backgroundColor = 'white';
 		};
 
-	},500);
+		if (!exist&&tiktok==renderList.length) {
+			var result = getByClass('result',null)[0];
+			result.style.display = 'inline-block';
+		};
+
+	},100);	
+
 }
 
 function myReset(){
 	
 	clearInterval(timer);
-	for (var i = 0; i < renderList.length; i++) {
-		renderList[i].style.backgroundColor = 'white';
-	};
 	renderList = [];
-
+	var divList = document.getElementsByTagName('div');
+	for (var i = 0; i < divList.length; i++) {
+		divList[i].style.backgroundColor = 'white';
+		divList[i].className = divList[i].className.replace('-MARKED','');
+	};
+	var result = getByClass('result',null)[0];
+	result.style.display = 'none';
 }
 
 /*-----------define a function to get element by classname--------*/
@@ -128,4 +188,7 @@ function dequeue(){
 
 window.onload=function(){
 	handleBtn();
+	handlerSearch();
+	var result = getByClass('result',null)[0];
+	result.style.display = 'none';
 }

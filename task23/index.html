@@ -8,51 +8,64 @@
 </head>
 <body>
 	<div class="super">
-		Super
+		<span>Super</span>
 		<div class="car">
-			Car
+			<span>Car</span>
 			<div class="apple">
-				Apple
-				<div class="pear">Pear</div>
-				<div class="pig">Pig</div>
-				<div class="cola">Cola</div>
-				<div class="soccer">Soccer</div>
+				<span>Apple</span>
+				<div class="pear"><span>Pear</span></div>
+				<div class="pig"><span>Pig</span></div>
+				<div class="cola"><span>Cola</span></div>
+				<div class="soccer"><span>Soccer</span></div>
 			</div>
 
 			<div class="phone">
-				Phone
+				<span>Phone</span>
 			</div>
 
 			<div class="noname">
-				<div class="book">Book</div>
-				<div class="school">School</div>
+				<div class="book"><span>Book</span></div>
+				<div class="school"><span>School</span></div>
 			</div>
 		</div>
 
 		<div class="note">
-			Note
+			<span>Note</span>
 			<div class="human">
-				Human
-				<div class="code">Code</div>
-				<div class="operate">Operate</div>
-				<div class="man">Man</div>
+				<span>Human</span>
+				<div class="code"><span>Code</span></div>
+				<div class="operate"><span>Operate</span></div>
+				<div class="man"><span>Man</span></div>
 			</div>
 
 			<div class="program">
-				Program
+				<span>Program</span>
 				<div class="bement">
-					Bement
-					<div class="cat">Cat</div>
+					<span>Bement</span>
+					<div class="cat"><span>Cat</span></div>
 				</div>
-				<div class="grass">Grass</div>
+				<div class="grass"><span>Grass</span></div>
 			</div>
 		</div>
 
-		<div class="fish">Fish</div>
+		<div class="fish"><span>Fish</span></div>
 
 	</div>
 
 	<button id="traversalDF">按深度遍历</button>
 	<button id="traversalBF">按广度遍历</button>
+	
+	<br>
+
+	查询：<input type="text" id="input">
+	<button id="traversalDF_search">按深度查询</button>
+	<button id="traversalBF_search">按广度查询</button>
+
+	<br>
+
+	<span class="result">
+		所查询的项目不存在
+	</span>
+
 </body>
 </html>
