@@ -1,0 +1,33 @@
+*{
+	padding: 0;
+	margin:0;
+}
+
+body{
+	text-align: center;
+}
+
+div{
+	display: flex;
+	justify-content:space-around;
+	padding: 20px 0;
+	margin:10px;
+	outline: 1px solid #666;
+	text-align: center;
+	font: 16px Microsoft JhengHei;
+}
+
+
+
+.fish{
+	width: 15%;
+	text-align: center;
+}
+
+button{
+	height: 30px;
+	width: 120px;
+	font: 16px Microsoft JhengHei;
+	margin-top: 20px;
+}
+
