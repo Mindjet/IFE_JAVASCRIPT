@@ -29,7 +29,6 @@ function handleBtn(){
 }
 
 function handlerSearch(){
-
 	
 	var search_DF = document.getElementById('traversalDF_search');
 	var search_BF = document.getElementById('traversalBF_search');
