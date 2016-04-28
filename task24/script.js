@@ -3,7 +3,6 @@
 var renderList = [];
 var timer = null;
 
-
 function handlerSearch(){
 	
 	var search_DF = document.getElementById('traversalDF_search');
