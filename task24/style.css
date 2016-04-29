@@ -8,7 +8,7 @@ body{
 	font: 16px Microsoft JhengHei;
 }
 
-div{
+.tree div{
 	display: flex;
 	justify-content:space-around;
 	padding: 20px 0;
@@ -18,11 +18,19 @@ div{
 	
 }
 
+.search{
+	margin-top: 20px;
+}
+
 button{
 	height: 30px;
 	width: 120px;
 	font: 16px Microsoft JhengHei;
-	margin-top: 20px;
+	outline: 0;
+}
+
+button:hover{
+	cursor: pointer;
 }
 
 input{
@@ -34,14 +42,46 @@ input{
 }
 
 .result{
-	display: inline-block;
+	display: none;
 	width: 300px;
 	height: 40px;
 	background-color: #666;
-	/*text-align: center;*/
 	line-height: 40px;
 	margin-top: 20px;
 	color: white;
 	border-radius: 20px;
-	/*display: none;*/
 }
+
+.popup{
+	display: none;
+	position: absolute;
+	width: 100px;
+	padding: 10px;
+	border: 2px solid #ccc;
+	border-radius: 10px;
+	background-color: white;
+}
+
+#delete{
+	width: 100%;
+	background-color: #f66;
+	border:0;
+	color: white;
+	margin-bottom: 5px;
+}
+
+#add{
+	width: 100%;
+	background-color: #393;
+	border:0;
+	color: white;
+}
+
+#add-item{
+	width: 96%;
+	padding: 0;
+	/*border:0;*/
+}
+
+
+
