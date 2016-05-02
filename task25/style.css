@@ -1,0 +1,118 @@
+*{
+	padding: 0;
+	margin:0;
+}
+
+body{
+	text-align: center;
+	font: 16px Microsoft JhengHei;
+}
+
+
+
+.tree{
+	width: 50%;
+	margin: 30px auto;
+}
+
+.tree div{
+	/*display: flex;*/
+	width: 90%;
+	/*justify-content:space-around;*/
+	padding: 10px 0;
+	/*margin:10px;*/
+	margin:10px 0 10px 5%;
+	outline: 1px solid #ccc;
+	text-align: center;
+	
+}
+
+.arrow-right{
+	display: inline-block;
+	width: 0;
+	height: 0;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+	border-left: 20px solid #ccc;
+	vertical-align: middle;
+	margin-right: 30px;
+}
+
+.arrow-down{
+	display: inline-block;
+	width: 0;
+	height: 0;
+	border-top: 20px solid #ccc;
+	border-right: 10px solid transparent;
+	border-left: 10px solid transparent;
+	vertical-align: middle;
+	margin-right: 30px;
+}
+
+.search{
+	margin-top: 20px;
+}
+
+button{
+	height: 30px;
+	width: 120px;
+	font: 16px Microsoft JhengHei;
+	outline: 0;
+}
+
+button:hover{
+	cursor: pointer;
+}
+
+input{
+	width: 200px;
+	height: 30px;
+	outline: none;
+	padding-left: 5px;
+	font: 16px Microsoft JhengHei;
+}
+
+.result{
+	display: none;
+	width: 300px;
+	height: 40px;
+	background-color: #666;
+	line-height: 40px;
+	margin-top: 20px;
+	color: white;
+	border-radius: 20px;
+}
+
+.popup{
+	display: none;
+	position: absolute;
+	width: 100px;
+	padding: 10px;
+	border: 2px solid #ccc;
+	border-radius: 10px;
+	background-color: white;
+}
+
+#delete{
+	width: 100%;
+	background-color: #f66;
+	border:0;
+	color: white;
+	margin-bottom: 5px;
+}
+
+#add{
+	width: 100%;
+	background-color: #393;
+	border:0;
+	color: white;
+}
+
+#add-item{
+	width: 96%;
+	padding: 0;
+	/*border:0;*/
+}
+
+
+
