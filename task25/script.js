@@ -79,7 +79,7 @@ function changeArrow(clsName){
 
 	if (object.children.length == 3) {
 		object.children[0].remove();
-		object.children[1].remove();
+		object.children[0].remove();
 	};
 
 	if (object.children.length>3) {
