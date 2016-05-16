@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<script src="script.js"></script>
 	<link rel="stylesheet" href="style.css">
-	<title>行星与飞船（一）</title>
+	<title>行星与飞船（二）</title>
 </head>
 <body>
 
@@ -34,6 +34,31 @@
 	<div id="console">
 		<div id="panel">
 			<span>控制面板</span>
+
+			<form action="">
+
+				<div id="dynamic">
+					<span>动力系统：</span>
+					&nbsp;&nbsp;&nbsp;
+					<label for=""><input name="dynamic" type="radio" value="cheap" checked>低档</label>
+					&nbsp;&nbsp;&nbsp;
+					<label for=""><input name="dynamic" type="radio" value="medium">中档</label>
+					&nbsp;&nbsp;&nbsp;
+					<label for=""><input name="dynamic" type="radio" value="expensive">奢华</label>
+				</div>
+
+				&nbsp;&nbsp;&nbsp;
+				<div id="fuel">
+					<span>能源系统:</span>
+					&nbsp;&nbsp;&nbsp;
+					<label for=""><input name="fuel" type="radio" value="cheap" checked>低档</label>
+					&nbsp;&nbsp;&nbsp;
+					<label for=""><input name="fuel" type="radio" value="medium">中档</label>
+					&nbsp;&nbsp;&nbsp;
+					<label for=""><input name="fuel" type="radio" value="expensive">奢华</label>
+				</div>
+
+			</form>
 			<div id="ship1">
 				<span>1号飞船:   </span>
 				<button class="launch">launch</button>
@@ -62,6 +87,7 @@
 				<button class="stop">stop</button>
 				<button class="destroy">destroy</button>
 			</div>
+
 		</div>
 		<div id="logcat">
 			<span id="clean">工作日志</span>

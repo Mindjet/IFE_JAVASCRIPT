@@ -12,11 +12,11 @@
 	  —Commander
 	  	 |————send
 
-	  —Mediator
+	  —Bus
 	  	 |————send
 	  	 |————receive
 
-	  —Message
+	  —bitMessage
 	  	 |————id
 	  	 |————command
 
@@ -24,17 +24,20 @@
 	  
 */
 
-
+var messageDelay = 300;
+var fail_rate = 0.1;
 
 
 var SpaceShip = function(id){
 
 	this.fuel = 30;
-	this.state = 'destroy';
+	this.state = '0004'; //it means that the ship is destroyed from the very beginning
 	this.id = id;
 	this.timer = null;
 	this.charge_timer = null;
 	this.degree = 0;
+	this.speed = null;
+	this.fuel_comsume_rate = null;
 
 };
 
@@ -55,8 +58,8 @@ SpaceShip.prototype.dynamicSystem = function() {
 		var planet = document.getElementById('planet');
 		var centralX = planet.offsetLeft+planet.offsetWidth/2;
 		var centralY = planet.offsetTop+planet.offsetHeight/2;
-		var realShip = document.getElementById('_'+currentship.id);
-		var orbit = document.getElementById('orbit'+currentship.id.substring(4));
+		var realShip = document.getElementById('_'+'ship'+currentship.id.substring(3));
+		var orbit = document.getElementById('orbit'+currentship.id.substring(3));
 
 		var radius = orbit.offsetWidth/2;
 		var perimeter = radius*2*Math.PI;
@@ -82,8 +85,8 @@ SpaceShip.prototype.dynamicSystem = function() {
 	//initialize the place when it launches
 	var initPlace = function(currentship){
 
-		var ship = document.getElementById('_'+currentship.id);
-		var orbit = document.getElementById('orbit'+currentship.id.substring(4));
+		var ship = document.getElementById('_'+'ship'+currentship.id.substring(3));
+		var orbit = document.getElementById('orbit'+currentship.id.substring(3));
 
 		ship.style.display = 'block';
 
@@ -100,15 +103,15 @@ SpaceShip.prototype.dynamicSystem = function() {
 
 		launch:function(){
 
-			if (mycraft.state=='destroy'){
+			if (mycraft.state=='0004'){
 				initPlace(mycraft);
-				mycraft.state = 'launch';
+				mycraft.state = '0001';
 			} 
 		},
 
 		fly:function(){
 
-			mycraft.state = 'fly';
+			mycraft.state = '0002';
 			ConsoleUtils.send_normal(mycraft.id+'--->'+'flying');
 			startRotate(mycraft);
 
@@ -116,7 +119,7 @@ SpaceShip.prototype.dynamicSystem = function() {
 
 		stop:function(){
 
-			mycraft.state = 'stop';
+			mycraft.state = '0003';
 			ConsoleUtils.send_normal(mycraft.id+'--->'+'stopped');
 			clearInterval(mycraft.timer);
 
@@ -126,12 +129,12 @@ SpaceShip.prototype.dynamicSystem = function() {
 
 		destory:function(){
 
-			mycraft.state = 'destroy';
-			shipGroup = Mediator.getShipGroup();
+			mycraft.state = '0004';
+			shipGroup = Bus.getShipGroup();
 			delete shipGroup[mycraft.id];
 			clearInterval(mycraft.timer);
 			clearInterval(mycraft.charge_timer);
-			document.getElementById('_'+mycraft.id).style.display = 'none';
+			document.getElementById('_'+'ship'+mycraft.id.substring(3)).style.display = 'none';
 
 		}
 
@@ -142,7 +145,7 @@ SpaceShip.prototype.dynamicSystem = function() {
 SpaceShip.prototype.fuelSystem = function() {
 
 	mycraft = this;
-	var myprogressbar = document.getElementById('_progressbar'+mycraft.id.substring(4));
+	var myprogressbar = document.getElementById('_progressbar'+mycraft.id.substring(3));
 
 	return{
 
@@ -177,7 +180,7 @@ SpaceShip.prototype.fuelSystem = function() {
 
 			if (mycraft.fuel<=0) {
 
-				mycraft.state = 'stop';
+				mycraft.state = '0003';
 				mycraft.fuel=1;
 				myprogressbar.style.height = '1px';
 				clearInterval(mycraft.timer);
@@ -200,9 +203,9 @@ SpaceShip.prototype.signalSystem = function() {
 
 		receive:function(msg){
 
-			if (msg.id==mycraft.id){
-				mycraft.stateSystem().changeState(msg.command);
-			} 
+			if (msg.substring(0,4)==mycraft.id) {
+				mycraft.stateSystem().changeState(msg.substring(4));
+			};
 
 		}
 
@@ -218,7 +221,6 @@ SpaceShip.prototype.stateSystem = function(){
 
 		if (state!=mycraft.state) {
 
-			// mycraft.state = state;
 			controlState(state);
 
 		};
@@ -229,19 +231,19 @@ SpaceShip.prototype.stateSystem = function(){
 
 		switch(state){
 
-			case 'launch':
+			case '0001':
 				mycraft.dynamicSystem().launch();
 				break;
 
-			case 'fly':
+			case '0002':
 				mycraft.dynamicSystem().fly();
 				break;
 
-			case 'stop':
+			case '0003':
 				mycraft.dynamicSystem().stop();
 				break;
 
-			case 'destroy':
+			case '0004':
 				mycraft.dynamicSystem().destory();
 				break;
 
@@ -264,8 +266,8 @@ var Commander = function(){
 		//broadcast receiver
 		send:function(id, command){
 
-			var msg = new Message(id, command);
-			Mediator.receive(msg);
+			var msg = bitMessage(id, command);
+			Bus.receive(msg);
 
 		}
 
@@ -273,46 +275,73 @@ var Commander = function(){
 
 }();
 
-var Mediator = function(){
+var Bus = function(){
 
 	var shipGroup = {};
+
+	var initialCore = function(ship){
+
+		var dynamic = document.getElementById('dynamic');
+		var dynamicSystem = dynamic.getElementsByTagName('input');
+
+		for (var i = 0; i < dynamicSystem.length; i++) {
+			if(dynamicSystem[i].checked == true)
+				ship.speed = dynamicSystem[i].value;
+		};
+
+		var fuel = document.getElementById('fuel');
+		var fuelSystem = fuel.getElementsByTagName('input');
+
+		for (var i = 0; i < fuelSystem.length; i++) {
+			if(fuelSystem[i].checked==true)
+				ship.fuel_comsume_rate = dynamicSystem[i].value;
+		};
+
+	}
 
 	return{
 
 		//broadcast
 		send:function(msg){
 
+			// extract the id and command from the message
+			var id = msg.substring(0,4);
+			var command = msg.substring(4);
+
 			setTimeout(function(){
 
-				if (msg.command=='launch'&&shipGroup[msg.id]==undefined) {
+				if (command=='0001'&&shipGroup[id]==undefined) {
 
-					var newShip = new SpaceShip(msg.id);
-					shipGroup[msg.id] = newShip;
+					var newShip = new SpaceShip(id);
 
-					ConsoleUtils.send_state(msg);;
+					initialCore(newShip);
+
+					shipGroup[id] = newShip;
+
+					ConsoleUtils.send_normal('newShip launched');
 
 				}
 
-				if (shipGroup[msg.id]==undefined) 
+				if (shipGroup[id]==undefined) 
 					ConsoleUtils.send_alert();
 				else
 					for(var key in shipGroup)
 						shipGroup[key].signalSystem().receive(msg);
 
-			}, 1000);
+			}, messageDelay);
 			
 
 		},
 
 		receive:function(msg){
 
-			if (Math.random()>0.3) {
-				ConsoleUtils.send_success();
-				this.send(msg);
-			}else{
+			//try until it is successfully sent
+			while(Math.random()<fail_rate){
 				ConsoleUtils.send_fail();
-			}
+			};
 			
+			ConsoleUtils.send_success();
+			this.send(msg);
 
 		},
 
@@ -326,10 +355,49 @@ var Mediator = function(){
 
 }();
 
-var Message = function(id, command){
+var bitMessage = function(id, command){
 
-	this.id = id;
-	this.command = command;
+	var bitmessage  = null;
+	var shipId = null;
+	var shipCommand = null;
+
+	switch(id){
+
+		case 'ship1':
+			shipId= '0001'
+			break;
+		case 'ship2':
+			shipId= '0002'
+			break;
+		case 'ship3':
+			shipId= '0003'
+			break;
+		case 'ship4':
+			shipId= '0004'
+			break;
+
+	}
+
+	switch(command){
+
+		case 'launch':
+			shipCommand = '0001';
+			break;
+		case 'fly':
+			shipCommand = '0002';
+			break;
+		case 'stop':
+			shipCommand = '0003';
+			break;
+		case 'destroy':
+			shipCommand = '0004';
+			break;
+
+	}
+
+	bitmessage = shipId + shipCommand;
+
+	return bitmessage;
 
 }
 
