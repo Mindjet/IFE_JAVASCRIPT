@@ -37,7 +37,8 @@ var SpaceShip = function(id){
 	this.charge_timer = null;
 	this.degree = 0;
 	this.speed = null;
-	this.fuel_comsume_rate = null;
+	this.charge_rate = null;
+	this.discharge_rate = null;
 
 };
 
@@ -45,8 +46,6 @@ var SpaceShip = function(id){
 SpaceShip.prototype.dynamicSystem = function() {
 
 	mycraft = this;
-	var speed = 10;
-	var fuel_dec_rate=1;
 	var progressbarMax = 30;
 
 	// dealing with the flying motion
@@ -63,7 +62,7 @@ SpaceShip.prototype.dynamicSystem = function() {
 
 		var radius = orbit.offsetWidth/2;
 		var perimeter = radius*2*Math.PI;
-		var increment = 360/(perimeter/speed);
+		var increment = 360/(perimeter/currentship.speed);
 
 		currentship.timer = setInterval(function(){
 
@@ -73,8 +72,8 @@ SpaceShip.prototype.dynamicSystem = function() {
 			realShip.style.left = centralX + radius*Math.sin(currentship.degree*Math.PI/180) - realShip.offsetWidth/2 +'px';
 			realShip.style.top = centralY + radius*Math.cos(currentship.degree*Math.PI/180) - realShip.offsetHeight/2 +'px';
 
-			currentship.degree+=increment;
-			currentship.fuel-=fuel_dec_rate;
+			currentship.degree += increment;
+			currentship.fuel -= currentship.discharge_rate;
 			currentship.fuelSystem().discharge();
 
 		},100);
@@ -135,6 +134,7 @@ SpaceShip.prototype.dynamicSystem = function() {
 			clearInterval(mycraft.timer);
 			clearInterval(mycraft.charge_timer);
 			document.getElementById('_'+'ship'+mycraft.id.substring(3)).style.display = 'none';
+			document.getElementById('_progressbar'+mycraft.id.substring(3)).style.height = '30px';
 
 		}
 
@@ -157,7 +157,7 @@ SpaceShip.prototype.fuelSystem = function() {
 
 				currentship.charge_timer = setInterval(function(){
 
-					currentship.fuel += 2;
+					currentship.fuel += currentship.charge_rate;
 
 					if (currentship.fuel>=30) {
 
@@ -229,6 +229,22 @@ SpaceShip.prototype.stateSystem = function(){
 
 	var controlState = function(state){
 
+		mycraft.adapter().decode(state);
+
+	}
+
+	return{
+
+		changeState:changeState
+
+	}
+
+}
+
+SpaceShip.prototype.adapter = function() {
+
+	var decode = function(state){
+
 		switch(state){
 
 			case '0001':
@@ -251,13 +267,13 @@ SpaceShip.prototype.stateSystem = function(){
 
 	}
 
-	return{
+	return {
 
-		changeState:changeState
+		decode:decode
 
 	}
-
-}
+	
+};
 
 var Commander = function(){
 
@@ -285,16 +301,53 @@ var Bus = function(){
 		var dynamicSystem = dynamic.getElementsByTagName('input');
 
 		for (var i = 0; i < dynamicSystem.length; i++) {
-			if(dynamicSystem[i].checked == true)
-				ship.speed = dynamicSystem[i].value;
+			if(dynamicSystem[i].checked == true){
+				// ship.speed = dynamicSystem[i].value;
+				switch(dynamicSystem[i].value){
+
+					case 'cheap':
+						ship.speed = 10;
+						ship.discharge_rate = 1;
+						break;
+					case 'medium':
+						ship.speed = 15;
+						ship.discharge_rate = 2;
+						break;
+					case 'expensive':
+						ship.speed = 20;
+						ship.discharge_rate = 3;
+						break;
+
+				}
+
+				break;
+			}
+				
 		};
 
 		var fuel = document.getElementById('fuel');
 		var fuelSystem = fuel.getElementsByTagName('input');
 
 		for (var i = 0; i < fuelSystem.length; i++) {
-			if(fuelSystem[i].checked==true)
-				ship.fuel_comsume_rate = dynamicSystem[i].value;
+			if(fuelSystem[i].checked==true){
+
+				switch(fuelSystem[i].value){
+
+					case 'cheap':
+						ship.charge_rate = 2;
+						break;
+					case 'medium':
+						ship.charge_rate = 3;
+						break;
+					case 'expensive':
+						ship.charge_rate = 4;
+						break;
+
+				}
+
+				break;
+			}
+				
 		};
 
 	}

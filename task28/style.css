@@ -4,6 +4,46 @@
 	font: 16px Microsoft JhengHei;
 }
 
+#universe{
+
+	width: 60%;
+	background-color: #ccc;
+
+}
+
+#info{
+
+	width: 40%;
+	float: right;
+	padding: 100px;
+	/*vertical-align: middle;*/
+
+}
+
+#table{
+	
+	width: 90%;
+	border-left: 1px solid #666;
+	border-top: 1px solid #666;
+
+}
+
+#table th{
+
+	background-color: #ccc;
+
+}
+
+#table th, #table td{
+
+	width: 20%;
+	text-align: center;
+	border-right: 1px solid #666;
+	border-bottom: 1px solid #666;
+	padding: 10px;
+
+}
+
 #console{
 
 	max-width: 100%;
