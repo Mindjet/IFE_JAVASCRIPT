@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>表单（一）单个表单项的检验</title>
+	<script src="script.js"></script>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	
+
+	<form>
+		
+		<label for="name">名称</label>
+		<input type="text" id="text" name="name" max="16" min="4" onsubmit="return verify()">
+
+		<input type="submit" value="验证" id="submit">
+		<br>
+
+		<span id="result">result</span>
+
+	</form>
+
+
+</body>
+</html>
