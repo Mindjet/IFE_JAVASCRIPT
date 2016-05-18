@@ -18,13 +18,14 @@ Block.prototype.move = function() {
 
 		var realBlock = document.getElementById('block');
 
+		//which direction to go depends on the DIRECTION of block
 		switch(block.direction){
 
 			case 'up':
 				if(block.coordinateY>1){
 
-					block.verticalOffset+=59;
-					realBlock.style.transform = 'translate(0,-'+block.verticalOffset+'px)';
+					block.verticalOffset-=59;
+					realBlock.style.transform = 'translate('+block.horizontalOffset+'px,'+block.verticalOffset+'px)'+' rotate('+block.degree+'deg)';
 					block.coordinateY--;
 				}
 
@@ -52,15 +53,19 @@ Block.prototype.move = function() {
 				break;
 
 			case 'right':
-				if (block.coordinateX<10) return true;
+				if (block.coordinateX<10){
 
-			return false;
+					block.horizontalOffset+=60;
+					realBlock.style.transform = 'translate('+block.horizontalOffset+'px,'+block.verticalOffset+'px)'+' rotate('+block.degree+'deg)';
+					block.coordinateX++;
+
+				}
+
+				break;
 
 		}
 
 	}
-
-	// transform:translate()
 
 	return {
 
@@ -75,54 +80,87 @@ Block.prototype.turn = function() {
 	block = this;
 	var realBlock = document.getElementById('block');
 
-	var left = function(){
+	var rotate = function(rotate_direction){
 
-		console.log('sadsadas');
-		block.degree -= 90;
-		realBlock.style.transformOrigin = block.verticalOffset+'px '+block.horizontalOffset+'px';
-		realBlock.style.transform =  'translate('+block.horizontalOffset+'px,'+block.verticalOffset+'px)'+' rotate('+block.degree+'deg)';
-		// block.direction = 'left';
+		switch(rotate_direction){
 
-		switch(block.direction){
-
-			case 'up':
-				block.direction = 'left';
 			case 'left':
-				block.direction = 'down';
-			case 'down':
-				block.direction = 'right';
+				block.degree-=90;
+				break;
 			case 'right':
-				block.direction = 'up';
+				block.degree+=90;
+				break;
+			case 'back':
+				block.degree+=180;
+				break;
 
 		}
 
-	}
-	
-	var right = function(){
+		realBlock.style.transformOrigin = '50%+'+block.horizontalOffset+' '+'50%+'+block.verticalOffset;
+		realBlock.style.transform ='translate('+block.horizontalOffset+'px,'+block.verticalOffset+'px)'+' rotate('+block.degree+'deg)';
 
-
-
-	}
-
-	var back = function(){
-
-
+		block.direction = block.change().changeDirection(block.direction, rotate_direction);
 
 	}
 
 	return{
 
-		left:left,
-		right:right,
-		back:back
+		rotate:rotate
 
 	}
 
 };
 
+
 Block.prototype.change = function(){
 
+	var directions = ['up','left','down','right'];
 
+	//change the direction of the block after rotations
+	var changeDirection = function(currectDirection, rotateDirection){
+
+		var i = 0;
+		for (;i < directions.length; i++) {
+			if(directions[i]==currectDirection)
+				break;
+		};
+
+		switch(rotateDirection){
+
+			case 'left':
+				if (i==3) {
+					return directions[0];
+				}else{
+					return directions[i+1];
+				}
+				break;
+
+			case 'right':
+				if (i==0) {
+					return directions[3];
+				}else{
+					return directions[i-1];
+				}
+				break;
+
+			case 'back':
+				if (i-2<0) {
+					return directions[i+2];
+				}
+				if (i+2>0) {
+					return directions[i-2];
+				}
+				break;
+
+		}
+
+	}
+
+	return{
+
+		changeDirection:changeDirection
+
+	}
 
 }
 
@@ -137,13 +175,13 @@ Block.prototype.decode = function() {
 				block.move().go();
 				break;
 			case 'TUN LEF':
-				block.turn().left();
+				block.turn().rotate('left');
 				break;
 			case 'TUN BAC':
-				block.turn().back();
+				block.turn().rotate('back');
 				break;
 			case 'TUN RIG':
-				block.turn().right();
+				block.turn().rotate('right');
 				break;
 
 		}
@@ -159,60 +197,50 @@ Block.prototype.decode = function() {
 };
 
 
-
-
-function positionLeftAxis(){
-
-	var leftCoordinate = document.getElementById('vertical');
-	leftCoordinate.style.left = document.getElementById('table').offsetLeft-45+'px';
-
-}
-
 function controlInit(){
-
-	var table = document.getElementById('table');
-	var form = document.getElementById('control');
-	form.style.top = table.offsetTop + table.offsetHeight +'px';
-	form.style.left = document.documentElement.offsetWidth/2 - form.offsetWidth/2 + 'px';
 
 	var input = document.getElementById('input');
 	var button = document.getElementById('button');
 
 	var block = new Block();
-
 	button.onclick = function(){
 
 		block.decode().decode(input.value.trim());
 
 	}
 
+	document.onkeydown = function(){
+
+		if (event.keyCode==13)
+			block.decode().decode(input.value.trim());
+
+	}
+
 }
 
-function positionBlock(){
 
-	var block = document.getElementById('block');
+function positionInit(){
+
+	//postion the table
 	var table = document.getElementById('table');
-
-	originRow = document.getElementById('table').getElementsByTagName('tr')[5];
+	table.style.left = document.documentElement.offsetWidth/2 - table.offsetWidth/2 +'px';
+	
+	//postion the block
+	var block = document.getElementById('block');
+	originRow = table.getElementsByTagName('tr')[5];
 	origin = originRow.getElementsByTagName('td')[5];
-
 	block.style.left = origin.offsetLeft+table.offsetLeft+1+'px';
 	block.style.top = origin.offsetTop+table.offsetTop+'px';
-}
 
-function positionTable(){
-
-	var table = document.getElementById('table');
-
-	table.style.left = document.documentElement.offsetWidth/2 - table.offsetWidth/2 +'px';
+	//postion the left axis
+	var leftCoordinate = document.getElementById('vertical');
+	leftCoordinate.style.left = table.offsetLeft-45+'px';
 
 }
 
 window.onload = function(){
 
-	positionTable();
-	positionBlock();
-	positionLeftAxis();
+	positionInit();
 	controlInit();
 
 }

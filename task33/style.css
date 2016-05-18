@@ -84,6 +84,41 @@
 #control{
 	
 	position: absolute;
-	margin-top: 20px;
+	top: 400px;
+	left: 80px;
+
+}
+
+#control input{
+
+	/*position: absolute;*/
+	width: 120px;
+	height: 30px;
+	padding: 2px 5px;
+	font: 18px Microsoft JhengHei;
+
+}
+
+#control button{
+
+	cursor: pointer;
+	width: 60px;
+	height: 30px;
+	padding: 2px 5px;
+	background-color: #ccc;
+	border: 0;
+	outline: 0;
+
+}
+
+#aside{
+	
+	position:absolute;
+	display: inline-block;
+	outline: 1px solid #ccc;
+	font: 18px Microsoft JhengHei;
+	padding: 20px;
+	left: 50px;
+	top: 180px;
 
 }
