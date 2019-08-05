@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script src="script.js"></script>
+	<link rel="stylesheet" href="style.css">
+	<title>行星与飞船（二）</title>
+</head>
+<body>
+
+	<div id="_ship1" class="ship">
+		<img src="ship.png" alt="">
+		<div id="_progressbar1" class="progressbar"></div>
+	</div>
+	<div id="_ship2" class="ship">
+		<img src="ship.png" alt="">
+		<div id="_progressbar2" class="progressbar"></div>
+	</div>
+	<div id="_ship3" class="ship">
+		<img src="ship.png" alt="">
+		<div id="_progressbar3" class="progressbar"></div>
+	</div>
+	<div id="_ship4" class="ship">
+		<img src="ship.png" alt="">
+		<div id="_progressbar4" class="progressbar"></div>
+	</div>
+
+	<div id="planet"></div>
+	<div id="orbit1" class="orbit"></div>
+	<div id="orbit2" class="orbit"></div>
+	<div id="orbit3" class="orbit"></div>
+	<div id="orbit4" class="orbit"></div>
+
+	<div id="console">
+		<div id="panel">
+			<span>控制面板</span>
+
+			<form action="">
+
+				<div id="dynamic">
+					<span>动力系统：</span>
+					&nbsp;&nbsp;&nbsp;
+					<label for=""><input name="dynamic" type="radio" value="cheap" checked>低档</label>
+					&nbsp;&nbsp;&nbsp;
+					<label for=""><input name="dynamic" type="radio" value="medium">中档</label>
+					&nbsp;&nbsp;&nbsp;
+					<label for=""><input name="dynamic" type="radio" value="expensive">奢华</label>
+				</div>
+
+				&nbsp;&nbsp;&nbsp;
+				<div id="fuel">
+					<span>能源系统:</span>
+					&nbsp;&nbsp;&nbsp;
+					<label for=""><input name="fuel" type="radio" value="cheap" checked>低档</label>
+					&nbsp;&nbsp;&nbsp;
+					<label for=""><input name="fuel" type="radio" value="medium">中档</label>
+					&nbsp;&nbsp;&nbsp;
+					<label for=""><input name="fuel" type="radio" value="expensive">奢华</label>
+				</div>
+
+			</form>
+			<div id="ship1">
+				<span>1号飞船:   </span>
+				<button class="launch">launch</button>
+				<button class="fly">fly</button>
+				<button class="stop">stop</button>
+				<button class="destroy">destroy</button>
+			</div>
+			<div id="ship2">
+				<span>2号飞船:   </span>
+				<button class="launch">launch</button>
+				<button class="fly">fly</button>
+				<button class="stop">stop</button>
+				<button class="destroy">destroy</button>
+			</div>
+			<div id="ship3">
+				<span>3号飞船:   </span>
+				<button class="launch">launch</button>
+				<button class="fly">fly</button>
+				<button class="stop">stop</button>
+				<button class="destroy">destroy</button>
+			</div>
+			<div id="ship4">
+				<span>4号飞船:   </span>
+				<button class="launch">launch</button>
+				<button class="fly">fly</button>
+				<button class="stop">stop</button>
+				<button class="destroy">destroy</button>
+			</div>
+
+		</div>
+		<div id="logcat">
+			<span id="clean">工作日志</span>
+			<div id = "content">Welcome to the Console...</div>
+		</div>
+
+	</div>
+	
+	
+	
+</body>
+</html>

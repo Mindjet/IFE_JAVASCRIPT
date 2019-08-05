@@ -1,0 +1,124 @@
+*{
+
+	margin: 0;
+	padding:0;
+
+}
+
+.horizon{
+
+	margin: 80px auto 0 auto;
+	width: 600px;
+	font-size: 0;
+
+}
+
+.horizon span{
+
+	display: inline-block;
+	width: 10%;
+	margin-left: 0;
+	margin-right: 0;
+	text-align: center;
+	font: 18px Microsoft JhengHei;
+
+}
+
+#vertical{
+
+	position: absolute;
+
+}
+
+#vertical span{
+
+	display: block;
+	height: 60px;
+	font: 18px Microsoft JhengHei;
+	line-height: 60px;
+	text-align: right;
+}
+
+
+#table{
+
+	width:600px;
+	height: 600px;
+	background-color: #ccc;
+	margin: 10px 0;
+	border-bottom: 1px solid black;
+	border-right: 1px solid black;
+	box-sizing:border-box;
+	position: absolute;
+
+}
+
+#table td{
+
+	width: 10%;
+	height: 10%;
+	border-left: 1px solid black;
+	border-top: 1px solid black;
+	box-sizing:border-box;
+
+}
+
+#block{
+
+	width: 59px;
+	height: 59px;
+	background-color: #49B3B0;
+	position: absolute;
+	transition: transform 1s;
+	/*transform-origin:50% 50%;*/
+
+}
+
+.face{
+
+	height: 15px;
+	background-color: #889B39;
+
+}
+
+#control{
+	
+	position: absolute;
+	top: 400px;
+	left: 80px;
+
+}
+
+#control input{
+
+	/*position: absolute;*/
+	width: 120px;
+	height: 30px;
+	padding: 2px 5px;
+	font: 18px Microsoft JhengHei;
+
+}
+
+#control button{
+
+	cursor: pointer;
+	width: 60px;
+	height: 30px;
+	padding: 2px 5px;
+	background-color: #ccc;
+	border: 0;
+	outline: 0;
+
+}
+
+#aside{
+	
+	position:absolute;
+	display: inline-block;
+	outline: 1px solid #ccc;
+	font: 18px Microsoft JhengHei;
+	padding: 20px;
+	left: 50px;
+	top: 180px;
+
+}

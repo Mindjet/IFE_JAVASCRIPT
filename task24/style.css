@@ -1,0 +1,87 @@
+*{
+	padding: 0;
+	margin:0;
+}
+
+body{
+	text-align: center;
+	font: 16px Microsoft JhengHei;
+}
+
+.tree div{
+	display: flex;
+	justify-content:space-around;
+	padding: 20px 0;
+	margin:10px;
+	outline: 1px solid #666;
+	text-align: center;
+	
+}
+
+.search{
+	margin-top: 20px;
+}
+
+button{
+	height: 30px;
+	width: 120px;
+	font: 16px Microsoft JhengHei;
+	outline: 0;
+}
+
+button:hover{
+	cursor: pointer;
+}
+
+input{
+	width: 200px;
+	height: 30px;
+	outline: none;
+	padding-left: 5px;
+	font: 16px Microsoft JhengHei;
+}
+
+.result{
+	display: none;
+	width: 300px;
+	height: 40px;
+	background-color: #666;
+	line-height: 40px;
+	margin-top: 20px;
+	color: white;
+	border-radius: 20px;
+}
+
+.popup{
+	display: none;
+	position: absolute;
+	width: 100px;
+	padding: 10px;
+	border: 2px solid #ccc;
+	border-radius: 10px;
+	background-color: white;
+}
+
+#delete{
+	width: 100%;
+	background-color: #f66;
+	border:0;
+	color: white;
+	margin-bottom: 5px;
+}
+
+#add{
+	width: 100%;
+	background-color: #393;
+	border:0;
+	color: white;
+}
+
+#add-item{
+	width: 96%;
+	padding: 0;
+	/*border:0;*/
+}
+
+
+
